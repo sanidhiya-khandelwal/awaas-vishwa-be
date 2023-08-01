@@ -1,7 +1,9 @@
+require('dotenv').config()//env 1
 const express = require('express') //express1
 const mongoose = require('mongoose')// db1
-require('dotenv').config()//env 1
+const cors = require('cors') //cors 1
 const healthRoute = require('./routes/HealthRoute') //route1
+const authRoutes = require('./routes/AuthRoutes')
 
 
 /**
@@ -9,6 +11,7 @@ const healthRoute = require('./routes/HealthRoute') //route1
  */
 const app = express(); //express2
 app.use(express.json());
+app.use(cors()); //cors 2
 
 
 /*
@@ -23,6 +26,7 @@ mongoose.connection.on('error', (er) => console.log("Database Error : ", er))
  * ROUTES
  */
 app.use('/health', healthRoute)
+app.use('/api/v1/auth', authRoutes)
 
 
 /**
