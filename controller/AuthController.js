@@ -42,11 +42,13 @@ const registerUser = async (req, res) => {
         const userByEmail = await User.findOne({ email: email });//to check in db if user with same email exists then show alert
         if (userByEmail) {
             res.status(400).json('Email already exists');
+            return;
         }
 
         const userByUsername = await User.findOne({ username: username });//to check in db if user with same username exists then show alert
         if (userByUsername) {
             res.status(400).json('User with same username already exists');
+            return;
         }
 
 
