@@ -16,11 +16,11 @@ const registerUser = async (req, res) => {
     //validations
     if (name.length < 2 || name.length > 50) {
         //converted response to json object
-        res.status(400).json({ error: 'Name should be greater than 1 and less than equal to 50 characters' })
+        res.status(400).json('Name should be greater than 1 and less than equal to 50 characters')
         return;
     }
     if (phone < 1000000000) {
-        res.status(400).json({ error: 'Invalid Phone Number' })
+        res.status(400).json('Invalid Phone Number')
         return
     }
     if (!mailformat.test(email)) {
@@ -38,6 +38,19 @@ const registerUser = async (req, res) => {
 
     //save into database
     try {
+
+        const userByEmail = await User.findOne({ email: email });//to check in db if user with same email exists then show alert
+        if (userByEmail) {
+            res.status(400).json('Email already exists');
+        }
+
+        const userByUsername = await User.findOne({ username: username });//to check in db if user with same username exists then show alert
+        if (userByUsername) {
+            res.status(400).json('User with same username already exists');
+        }
+
+
+
         const userDoc = await User.create({
             name,
             phone,
@@ -48,7 +61,7 @@ const registerUser = async (req, res) => {
         res.status(201).json(userDoc);
     }
     catch (err) {
-        res.status(400).json('Bad Request');
+        res.status(400).json({ error: 'Bad Request' });
     }
 
 }
