@@ -98,7 +98,16 @@ const loginUser = async (req, res) => {
         // console.log('token ', token);
         // res.status(200).end(token)
         // res.status(200).json({ success: 'User Logged in' })
-        res.cookie('token', token, { httpOnly: true }).status(200).json({ success: 'User Logged in' })
+        // res.cookie('token', token, { httpOnly: true }).status(200).json({ success: 'User Logged in' })
+
+        res.cookie('token', token, { httpOnly: true }).status(200).json({
+            success: 'User Logged in',
+            data: {
+                userId: userDoc._id,
+                username: userDoc.username
+            }
+
+        })
     }
     catch (err) {
         res.end('err')
