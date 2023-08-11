@@ -10,21 +10,26 @@ const authRoutes = require('./routes/AuthRoutes')
  * APP
  */
 
-var whitelist = ['http://localhost:5173', /** other domains if any */]
-var corsOptions = {
-    credentials: true,
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+// var whitelist = ['http://localhost:5173', /** other domains if any */]
+// var corsOptions = {
+//     credentials: true,
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     }
+// }
 const app = express(); //express2
 app.use(express.json());
 //app.use(cors()); //cors 2
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({
+    credentials: true,
+    // origin: ['http://localhost:5173', 'https://awaas-vishwa-av.vercel.app/'],
+    origin: ['https://awaas-vishwa-av.vercel.app/'],
+}))
 
 
 /*
