@@ -121,4 +121,32 @@ const logoutUser = (req, res) => {
     res.clearCookie('token').status(200).json({ success: "User Logged Out" })
 }
 
-module.exports = { registerUser, loginUser, logoutUser }
+const profileCheck = async (req, res) => {
+    const { token } = req.cookies;
+    console.log(token);
+    if (!token) {
+        res.status(401).json({ error: 'Please Login' })
+        return
+    }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log('hi', decoded);
+        const userDoc = await User.findOne({ _id: decoded.id });
+        console.log(userDoc);
+        res.status(200).json({
+            data: {
+                userId: userDoc._id,
+                username: userDoc.username,
+            }
+        })
+    }
+    catch (err) {
+        console.log('1');
+        res.status(400).json({ error: 'Errorr Occurred' })
+        return
+    }
+    // console.log(req.cookies);
+    // res.status(200).end('hi')
+}
+
+module.exports = { registerUser, loginUser, logoutUser, profileCheck }
