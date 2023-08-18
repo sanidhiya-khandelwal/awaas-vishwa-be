@@ -29,8 +29,8 @@ app.use(cookieParser())//cp2
 // app.use(cors(corsOptions));
 app.use(cors({
     credentials: true,
-    // origin: ['http://localhost:5173', 'https://awaas-vishwa-av.vercel.app/'],
-    origin: ['https://awaas-vishwa-av.vercel.app/'],
+    origin: ['http://localhost:5173', 'https://awaas-vishwa-av.vercel.app'],
+    // origin: ['https://awaas-vishwa-av.vercel.app'],
     // origin: 'http://localhost:5173'
 }))
 
