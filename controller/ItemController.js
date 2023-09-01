@@ -61,4 +61,29 @@ const createItem = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" })
     }
 }
-module.exports = { createItem }
+
+const getItems = async (req, res) => {
+    console.log(req.query);
+    const pageNo = req.query.page;
+    const pageSize = 10;
+    const skips = (pageNo - 1) * pageSize;
+    const propertyAdList = await PropertyAd.find().skip(skips).limit(pageSize);
+    // const propertyAdList = await PropertyAd.find();
+    let propertyAdListResponse = []
+
+    for (const propertyAdItem of propertyAdList) {
+        propertyAdListResponse.push({
+            title: propertyAdItem.title,
+            location: propertyAdItem.location,
+            price: propertyAdItem.price,
+            listType: propertyAdItem.listType,
+            imgList: propertyAdItem.imgList,
+            createdAt: propertyAdItem.createdAt,
+            id: propertyAdItem._id,
+        })
+    }
+    res.status(200).json({
+        data: propertyAdListResponse
+    })
+}
+module.exports = { createItem, getItems };
