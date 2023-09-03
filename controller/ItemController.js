@@ -97,7 +97,8 @@ const getItemDetails = async (req, res) => {
     }
     try {
         // const PropertyAdDoc = await PropertyAd.findById(itemId);
-        const PropertyAdDoc = await PropertyAd.findById(itemId).populate('author', ['name', 'phone', 'email']);
+        // const PropertyAdDoc = await PropertyAd.findById(itemId).populate('author', ['name', 'phone', 'email']);
+        const PropertyAdDoc = await PropertyAd.findById(itemId).populate('author', ['name']);
         res.status(200).json({
             data: PropertyAdDoc
         });
