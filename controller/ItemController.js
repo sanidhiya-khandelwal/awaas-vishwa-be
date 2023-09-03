@@ -86,4 +86,25 @@ const getItems = async (req, res) => {
         data: propertyAdListResponse
     })
 }
-module.exports = { createItem, getItems };
+
+const getItemDetails = async (req, res) => {
+    // console.log(req.params);
+    // res.end('hiii')
+    const { itemId } = req.params;
+    if (itemId == null || itemId == undefined || itemId.length == 0) {
+        res.status(400).json({ error: 'invalid item id' })
+        return;
+    }
+    try {
+        // const PropertyAdDoc = await PropertyAd.findById(itemId);
+        const PropertyAdDoc = await PropertyAd.findById(itemId).populate('author', ['name', 'phone', 'email']);
+        res.status(200).json({
+            data: PropertyAdDoc
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: 'Something went wrong' })
+        return;
+    }
+}
+module.exports = { createItem, getItems, getItemDetails };
