@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser'); //cp1
 const healthRoute = require('./routes/HealthRoute') //route1
 const authRoutes = require('./routes/AuthRoutes')
 const ItemsRoutes = require('./routes/ItemRoutes')
-
+const ProfileRoutes = require('./routes/ProfileRoutes')
 /**
  * APP
  */
@@ -49,6 +49,7 @@ mongoose.connection.on('error', (er) => console.log("Database Error : ", er))
 app.use('/health', healthRoute)
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/items', ItemsRoutes)
+app.use('/api/v1/profile-settings', ProfileRoutes)
 
 
 /**
