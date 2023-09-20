@@ -67,11 +67,17 @@ const createItem = async (req, res) => {
 }
 
 const getItems = async (req, res) => {
-    // console.log(req.query);
+    console.log('req.query', req.query);
     const pageNo = req.query.page;
+    const type = req.query.type;
+    console.log('type', type);
     const pageSize = 10;
     const skips = (pageNo - 1) * pageSize;
-    const propertyAdList = await PropertyAd.find().sort({ _id: -1 }).skip(skips).limit(pageSize);
+    const propertyAdList = await PropertyAd
+        .find({ listType: type ? type : { $exists: true } })
+        .sort({ _id: -1 })
+        .skip(skips)
+        .limit(pageSize);
     // const propertyAdList = await PropertyAd.find();
     let propertyAdListResponse = []
 
